@@ -19,7 +19,7 @@ type Step =
   | "result";
 
 export default function FlowContainer() {
-  const [history, setHistory] = useState<Step[]>(["step1"]);
+  const [history, setHistory] = useState<Step[]>(["step2A"]);
   const [data, setData] = useState<any>({});
 
   const step = history[history.length - 1];
@@ -44,7 +44,7 @@ export default function FlowContainer() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto bg-white p-10 rounded-2xl shadow-lg relative">
+    <div className="max-w-3xl mx-auto rounded-2xl shadow-lg relative">
       
       {history.length > 1 && (
         <button
