@@ -1,11 +1,11 @@
 "use client";
 
-import FlowContainer from "@/components/Flow/FlowContainer";
+import AIStrategySelector from "@/components/Flow/AIStrategySelector";
 
 export default function Page() {
   return (
-    <div className="min-h-screen bg-gray-100 py-10 px-4">
-      <FlowContainer />
+    <div className="">
+      <AIStrategySelector />
     </div>
   );
 }
