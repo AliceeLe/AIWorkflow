@@ -2,66 +2,66 @@ import { ActionItem } from "./types";
 
 // ── Step 3: Getting Started ──────────────────────────────────────────────────
 // Shown on the first shared action-items screen (same for all result paths).
-export const STEP3_TITLE = "Getting Started";
+export const STEP3_TITLE = "Upgrading relevant skills";
 export const STEP3_SUBTITLE =
-  "Before you adopt any new AI tooling, these four steps will save you from the most common implementation mistakes.";
+  "After setting up AI into your workflow, you would want to train engineers on relevant skills so they can best utilize the new technology";
 
 export const STEP3_ACTIONS: ActionItem[] = [
   {
     step: "01",
-    title: "Audit Your Current Stack",
+    title: "Upload your code files",
     description:
-      "Document every place AI is already being used (or experimented with) in your team. Identify overlaps, gaps, and redundant subscriptions. Build a single source of truth before adding new tools.",
+      "Strategically select specific code files to build up context information to feed the AI without wasting tokens.",
   },
   {
     step: "02",
-    title: "Define Your Evaluation Criteria",
+    title: "Prompt engineering",
     description:
-      "Set measurable benchmarks before you commit: latency targets, cost-per-request budgets, quality thresholds on your actual tasks. Avoid vendor benchmarks — run your own evals on representative prompts.",
+      "Apply prompt engineering techniques to the input to improve the quality of the generated code.",
   },
   {
     step: "03",
-    title: "Run a Constrained Pilot",
+    title: "Code review",
     description:
-      "Pick one workflow, one team, and a 30-day window. Instrument everything. Track real usage, not perceived value. Let data drive the broader rollout decision.",
+      "PReview the generated code thoroughly, utilizing fundamental knowledge of the programming language to ensure accuracy.",
   },
   {
     step: "04",
-    title: "Establish Governance Early",
+    title: "Test your code",
     description:
-      "Define who can approve new AI integrations, how sensitive data is handled, and what review process AI-generated code goes through before merging. Policy debt is much harder to repay later.",
+      "Test the AI-generated code to verify its functionality and correctness before integration.",
   },
 ];
 
 // ── Step 4: Scale & Sustain ──────────────────────────────────────────────────
 // Shown on the second shared action-items screen (same for all result paths).
-export const STEP4_TITLE = "Scale & Sustain";
+export const STEP4_TITLE = "Establish Performance Metrics";
 export const STEP4_SUBTITLE =
-  "Once your pilot is live, these steps determine whether AI adoption becomes a durable capability or a forgotten experiment.";
+  "These steps determine whether your employees are using AI tools well enough.";
 
 export const STEP4_ACTIONS: ActionItem[] = [
   {
-    step: "05",
-    title: "Build Your Prompt Library",
+    step: "01",
+    title: "Performance metrics",
     description:
-      "Create a shared repository of battle-tested prompts for your most common tasks. Treat them like code — version controlled, reviewed, and continuously improved based on output quality.",
+      "Define measurable performance indicators that evaluate employee effectiveness when using AI tools",
   },
   {
-    step: "06",
-    title: "Implement Cost Monitoring",
+    step: "02",
+    title: "Tracking mechanisms",
     description:
-      "Set up token usage dashboards and budget alerts before you scale. Per-team or per-project cost attribution prevents surprise bills and helps you identify which workflows deliver the most ROI.",
+      "Develop tracking mechanisms to monitor AI-assisted workflow outcomes such as productivity, code quality, and efficiency.",
   },
   {
-    step: "07",
-    title: "Plan for Model Transitions",
+    step: "03",
+    title: "Define evaluation framework",
     description:
-      "Models are updated and deprecated on 6–18 month cycles. Abstract your integration behind an interface so you can swap providers or versions without rewriting application logic.",
+      "Create incentive or evaluation frameworks that reward effective and responsible AI usage.",
   },
   {
-    step: "08",
-    title: "Invest in Developer Education",
+    step: "04",
+    title: "Continuous work",
     description:
-      "The biggest failure mode for AI adoption isn't the technology — it's developers who don't know how to prompt effectively or who distrust outputs and ignore the tools entirely. Run workshops, share wins, and create feedback loops.",
+      "Continuously review and adjust metrics to ensure alignment with organizational goals and workflow improvements.",
   },
 ];
