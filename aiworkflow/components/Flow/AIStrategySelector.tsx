@@ -191,7 +191,18 @@ export default function AIStrategySelector() {
                     <span className="text-2xl flex-shrink-0">{block.icon}</span>
                     <div>
                       <p className="text-sm font-bold text-slate-200 mb-1">{block.title}</p>
-                      <p className="text-sm text-slate-400 leading-relaxed">{block.body}</p>
+                      {Array.isArray(block.body) ? (
+                        <ul className="space-y-1 mt-2">
+                          {block.body.map((item, j) => (
+                            <li key={j} className="flex items-start gap-2 text-sm text-slate-400">
+                              <span className="text-indigo-500 mt-0.5 flex-shrink-0">›</span>
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p className="text-sm text-slate-400 leading-relaxed">{block.body}</p>
+                      )}
                     </div>
                   </div>
                 </div>

@@ -7,7 +7,7 @@ export interface Question {
 export interface InfoBlock {
   icon: string;
   title: string;
-  body: string;
+  body: string | string[];
 }
 
 export interface Step2Content {
