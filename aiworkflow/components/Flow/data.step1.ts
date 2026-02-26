@@ -11,6 +11,14 @@ export const RESULTS = [
   "IDE-Integrated Fast (GitHub Copilot / Claude Haiku)",
 ];
 
+export const STEP1_MATERIALS_REQUIRED = [
+  "A computer capable of running your development environment reliably.",
+  "An IDE or code editor configured for your project language and tooling.",
+  "Access to your code repository and required project dependencies.",
+  "Access to an approved AI coding tool account or API credentials.",
+  "Stable internet connection and terminal or command-line access.",
+];
+
 // Each option's `value` is a comma-separated list of result indices that
 // this answer votes for. Every value within a question must be unique,
 // otherwise React treats two options as the same radio button.

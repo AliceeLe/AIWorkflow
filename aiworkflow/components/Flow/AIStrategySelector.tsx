@@ -1,6 +1,11 @@
 import { useLayoutEffect, useState } from "react";
-import { RESULTS, QUESTIONS } from "./data.step1";
+import {
+  RESULTS,
+  QUESTIONS,
+  STEP1_MATERIALS_REQUIRED,
+} from "./data.step1";
 import { STEP2_CONTENT } from "./data.step2";
+import { CHECKLIST_THEMES, FlatChecklistCard, SectionedChecklistCard } from "./ChecklistBlocks";
 import {
   STEP3_TITLE, STEP3_SUBTITLE, STEP3_ACTIONS,
   STEP4_TITLE, STEP4_SUBTITLE, STEP4_ACTIONS,
@@ -33,36 +38,25 @@ const buildPart3PreconditionChecklist = (
   strategyLabel: string,
 ): string[] => {
   const normalizedStrategyLabel = strategyLabel.replace(/\s*\([^)]*\)/g, "").trim();
-  const part2StepHints: string[] = [];
+  const keyPart2Steps: string[] = [];
   for (const block of blocks) {
     if (/steps?/i.test(block.title) && Array.isArray(block.body)) {
       for (const step of block.body) {
-        if (part2StepHints.length < 3) part2StepHints.push(step);
+        if (keyPart2Steps.length < 2) keyPart2Steps.push(step);
       }
     }
   }
 
-  let strategyReady = "Execution environment and access controls are ready for safe delivery.";
-  if (/self-hosted|open-weight/i.test(strategyLabel)) {
-    strategyReady = "Model runtime environment is reachable permissioned and passing health checks.";
-  } else if (/premium|api|agent|claude|gpt|gemini/i.test(strategyLabel)) {
-    strategyReady = "Provider credentials are scoped monitored and protected by usage and budget limits.";
-  } else if (/router|cost-optimized/i.test(strategyLabel)) {
-    strategyReady = "Routing and escalation behavior matches expected outcomes in validation samples.";
-  } else if (/ide-integrated|copilot|haiku/i.test(strategyLabel)) {
-    strategyReady = "IDE usage policy is enforced and onboarding coverage is confirmed for target teams.";
-  }
-
-  const part2Readiness =
-    part2StepHints.length > 0
-      ? `Part 2 setup evidence is available for key actions including ${part2StepHints.join(", ")}.`
-      : "Part 2 setup evidence is available for all required onboarding actions.";
+  const part2Evidence =
+    keyPart2Steps.length > 0
+      ? `Part 2 outputs are documented with evidence for ${keyPart2Steps.join(" and ")}.`
+      : "Part 2 outputs are documented and ready for implementation kickoff.";
 
   return [
-    `Selected strategy ${normalizedStrategyLabel} is locked and communicated to delivery stakeholders.`,
-    part2Readiness,
-    strategyReady,
-    "Context package is sanitized with no secrets or regulated data and aligned to the implementation scope.",
+    `Selected strategy ${normalizedStrategyLabel} is confirmed by delivery stakeholders.`,
+    part2Evidence,
+    "Context package includes scope boundaries, acceptance criteria, and coding constraints.",
+    "Input context is sanitized with no secrets, private keys, or regulated data.",
   ];
 };
 
@@ -164,15 +158,14 @@ export default function AIStrategySelector() {
   const step2Data = STEP2_CONTENT[resultIndex] ?? STEP2_CONTENT[1];
   const resultLabel = RESULTS[resultIndex] ?? RESULTS[1];
   const part3PreconditionItems = buildPart3PreconditionChecklist(step2Data.blocks, resultLabel);
-  const part3PreconditionCheckedCount = part3PreconditionItems.reduce((total, _, idx) => {
-    const checkKey = `step3-precondition-${resultIndex}-${idx}`;
-    return total + (checkedChecklistItems[checkKey] ? 1 : 0);
-  }, 0);
-  const part3PreconditionProgress = part3PreconditionItems.length > 0
-    ? Math.round((part3PreconditionCheckedCount / part3PreconditionItems.length) * 100)
-    : 0;
-  const isPart3Ready = part3PreconditionItems.length > 0
-    && part3PreconditionCheckedCount === part3PreconditionItems.length;
+  const step1MaterialChecklist = STEP1_MATERIALS_REQUIRED.map((label, index) => ({
+    key: `step1-materials-${index}`,
+    label,
+  }));
+  const part3PreconditionChecklist = part3PreconditionItems.map((label, index) => ({
+    key: `step3-precondition-${resultIndex}-${index}`,
+    label,
+  }));
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 py-12 px-4 font-mono">
@@ -222,6 +215,17 @@ export default function AIStrategySelector() {
         ══════════════════════════════════════ */}
         {step === 1 && (
           <div>
+            <FlatChecklistCard
+              className="mb-6"
+              title="Materials Required"
+              description="Confirm these basics before starting this AI coding workflow survey."
+              items={step1MaterialChecklist}
+              checkedItems={checkedChecklistItems}
+              onToggle={toggleChecklistItem}
+              theme={CHECKLIST_THEMES.yellow}
+              doneMessage="Materials are ready. Continue with the survey questions."
+            />
+
             <div className="mb-8">
               <div className="flex justify-between text-xs text-slate-500 mb-1">
                 <span>{answeredCount} / {QUESTIONS.length} answered</span>
@@ -359,66 +363,16 @@ export default function AIStrategySelector() {
               <p className="text-slate-400 text-sm leading-relaxed">{STEP3_SUBTITLE}</p>
             </div>
 
-            <div className="mb-6 rounded-xl border border-emerald-500/35 bg-emerald-950/15 p-4">
-              <div className="flex items-center justify-between gap-3 mb-2">
-                <p className="text-xs tracking-widest uppercase text-emerald-300 font-semibold">
-                  Part3 Precondition
-                </p>
-                <span className="text-[11px] text-emerald-200">
-                  {part3PreconditionCheckedCount}/{part3PreconditionItems.length} done
-                </span>
-              </div>
-              <p className="text-xs text-slate-300 mb-3 leading-relaxed">
-                Verify Part 2 readiness with concrete evidence before starting Part 3 execution.
-              </p>
-              <div className="h-1.5 rounded-full bg-emerald-950/70 border border-emerald-500/20 overflow-hidden mb-3">
-                <div
-                  className="h-full bg-gradient-to-r from-emerald-500/70 to-emerald-300/80 transition-all duration-300"
-                  style={{ width: `${part3PreconditionProgress}%` }}
-                />
-              </div>
-              <ul className="space-y-1.5">
-                {part3PreconditionItems.map((checkItem, checkIndex) => {
-                  const checkKey = `step3-precondition-${resultIndex}-${checkIndex}`;
-                  const checked = !!checkedChecklistItems[checkKey];
-                  return (
-                    <li key={checkKey} className="text-sm leading-relaxed">
-                      <label
-                        className={`group flex items-start gap-3 rounded-md border px-3 py-2 cursor-pointer transition-all duration-150
-                          ${checked
-                            ? "border-emerald-500/45 bg-emerald-900/25"
-                            : "border-emerald-500/15 bg-slate-900/35 hover:border-emerald-500/30 hover:bg-slate-900/60"
-                          }`}
-                      >
-                        <input
-                          type="checkbox"
-                          checked={checked}
-                          onChange={() => toggleChecklistItem(checkKey)}
-                          className="sr-only"
-                        />
-                        <span
-                          className={`mt-0.5 h-5 w-5 flex items-center justify-center rounded border text-[11px] font-bold transition-colors
-                            ${checked
-                              ? "border-emerald-300/80 bg-emerald-400/20 text-emerald-200"
-                              : "border-emerald-500/35 bg-slate-900 text-transparent group-hover:border-emerald-400/60"
-                            }`}
-                        >
-                          ✓
-                        </span>
-                        <span className={checked ? "text-slate-400 line-through" : "text-slate-200"}>
-                          {checkItem}
-                        </span>
-                      </label>
-                    </li>
-                  );
-                })}
-              </ul>
-              {isPart3Ready && (
-                <div className="mt-3 rounded-md border border-emerald-500/35 bg-emerald-900/20 px-3 py-2 text-xs text-emerald-100">
-                  Part3 preconditions verified. You can start working on Part 3.
-                </div>
-              )}
-            </div>
+            <FlatChecklistCard
+              className="mb-6"
+              title="Part3 Precondition"
+              description="Verify readiness from Part 2 before starting Part 3 execution."
+              items={part3PreconditionChecklist}
+              checkedItems={checkedChecklistItems}
+              onToggle={toggleChecklistItem}
+              theme={CHECKLIST_THEMES.emerald}
+              doneMessage="Part3 preconditions verified. You can start working on Part 3."
+            />
 
             <div className="space-y-4 mb-8">
               {STEP3_ACTIONS.map((item) => {
@@ -428,21 +382,6 @@ export default function AIStrategySelector() {
                 const templateFields = item.promptTemplate ? extractTemplateFields(item.promptTemplate) : [];
                 const renderedPrompt = item.promptTemplate ? fillTemplate(item.promptTemplate, fieldValues) : "";
                 const moreSourcesUrl = item.moreSourcesUrl ?? "https://google.github.io/eng-practices/review/";
-                const totalChecklistCount = item.checklistSections
-                  ? item.checklistSections.reduce((total, section) => total + section.items.length, 0)
-                  : 0;
-                const checkedChecklistCount = item.checklistSections
-                  ? item.checklistSections.reduce(
-                    (total, section, sectionIndex) => total + section.items.reduce((sectionTotal, _, checkIndex) => {
-                      const checkKey = `${templateKey}-section-${sectionIndex}-item-${checkIndex}`;
-                      return sectionTotal + (checkedChecklistItems[checkKey] ? 1 : 0);
-                    }, 0),
-                    0,
-                  )
-                  : 0;
-                const checklistProgress = totalChecklistCount > 0
-                  ? Math.round((checkedChecklistCount / totalChecklistCount) * 100)
-                  : 0;
                 const summaryCardCount = [item.pros, item.cons, item.bestFor, item.guidingQuestions]
                   .filter((group) => group && group.length > 0)
                   .length;
@@ -604,78 +543,16 @@ export default function AIStrategySelector() {
                         )}
 
                         {item.checklistSections && item.checklistSections.length > 0 && (
-                          <div className="mt-4 rounded-lg border border-emerald-500/25 bg-slate-950/50 p-3">
-                            <div className="mb-3">
-                              <div className="flex items-center justify-between gap-3 mb-2">
-                                <p className="text-xs text-emerald-300 tracking-wide uppercase">
-                                  AI-Generated Code Review Checklist
-                                </p>
-                                <span className="text-[11px] text-emerald-200">
-                                  {checkedChecklistCount}/{totalChecklistCount} done
-                                </span>
-                              </div>
-                              <div className="h-1.5 rounded-full bg-emerald-950/70 border border-emerald-500/20 overflow-hidden">
-                                <div
-                                  className="h-full bg-gradient-to-r from-emerald-500/70 to-emerald-300/80 transition-all duration-300"
-                                  style={{ width: `${checklistProgress}%` }}
-                                />
-                              </div>
-                            </div>
-                            <div className="space-y-3">
-                              {item.checklistSections.map((section, sectionIndex) => {
-                                const sectionCheckedCount = section.items.reduce((sectionTotal, _, checkIndex) => {
-                                  const checkKey = `${templateKey}-section-${sectionIndex}-item-${checkIndex}`;
-                                  return sectionTotal + (checkedChecklistItems[checkKey] ? 1 : 0);
-                                }, 0);
-                                return (
-                                <div key={sectionIndex} className="rounded-md border border-emerald-500/25 bg-gradient-to-br from-emerald-950/20 to-slate-900/60 p-3">
-                                  <div className="flex items-center justify-between gap-3 mb-2">
-                                    <p className="text-sm text-emerald-200 font-semibold">{section.title}</p>
-                                    <span className="text-[11px] text-emerald-200/80">
-                                      {sectionCheckedCount}/{section.items.length}
-                                    </span>
-                                  </div>
-                                  <ul className="space-y-1.5">
-                                    {section.items.map((checkItem, checkIndex) => {
-                                      const checkKey = `${templateKey}-section-${sectionIndex}-item-${checkIndex}`;
-                                      const checked = !!checkedChecklistItems[checkKey];
-                                      return (
-                                        <li key={checkIndex} className="text-sm leading-relaxed">
-                                          <label
-                                            className={`group flex items-start gap-3 rounded-md border px-3 py-2 cursor-pointer transition-all duration-150
-                                              ${checked
-                                                ? "border-emerald-500/45 bg-emerald-900/25"
-                                                : "border-emerald-500/15 bg-slate-900/35 hover:border-emerald-500/30 hover:bg-slate-900/60"
-                                              }`}
-                                          >
-                                            <input
-                                              type="checkbox"
-                                              checked={checked}
-                                              onChange={() => toggleChecklistItem(checkKey)}
-                                              className="sr-only"
-                                            />
-                                            <span
-                                              className={`mt-0.5 h-5 w-5 flex items-center justify-center rounded border text-[11px] font-bold transition-colors
-                                                ${checked
-                                                  ? "border-emerald-300/80 bg-emerald-400/20 text-emerald-200"
-                                                  : "border-emerald-500/35 bg-slate-900 text-transparent group-hover:border-emerald-400/60"
-                                                }`}
-                                            >
-                                              ✓
-                                            </span>
-                                            <span className={checked ? "text-slate-400 line-through" : "text-slate-200"}>
-                                              {checkItem}
-                                            </span>
-                                          </label>
-                                        </li>
-                                      );
-                                    })}
-                                  </ul>
-                                </div>
-                                );
-                              })}
-                            </div>
-                          </div>
+                          <SectionedChecklistCard
+                            className="mt-4"
+                            title="AI-Generated Code Review Checklist"
+                            sections={item.checklistSections}
+                            checklistKeyPrefix={templateKey}
+                            checkedItems={checkedChecklistItems}
+                            onToggle={toggleChecklistItem}
+                            theme={CHECKLIST_THEMES.emerald}
+                            showSectionProgress
+                          />
                         )}
 
                         {item.resources && item.resources.length > 0 && (
@@ -790,21 +667,6 @@ export default function AIStrategySelector() {
                 const fieldValues = templateValues[templateKey] ?? {};
                 const templateFields = item.promptTemplate ? extractTemplateFields(item.promptTemplate) : [];
                 const renderedPrompt = item.promptTemplate ? fillTemplate(item.promptTemplate, fieldValues) : "";
-                const totalChecklistCount = item.checklistSections
-                  ? item.checklistSections.reduce((total, section) => total + section.items.length, 0)
-                  : 0;
-                const checkedChecklistCount = item.checklistSections
-                  ? item.checklistSections.reduce(
-                    (total, section, sectionIndex) => total + section.items.reduce((sectionTotal, _, checkIndex) => {
-                      const checkKey = `${templateKey}-section-${sectionIndex}-item-${checkIndex}`;
-                      return sectionTotal + (checkedChecklistItems[checkKey] ? 1 : 0);
-                    }, 0),
-                    0,
-                  )
-                  : 0;
-                const checklistProgress = totalChecklistCount > 0
-                  ? Math.round((checkedChecklistCount / totalChecklistCount) * 100)
-                  : 0;
                 return (
                   <div key={item.step} className="space-y-2">
                     <button
@@ -901,67 +763,15 @@ export default function AIStrategySelector() {
                         )}
 
                         {item.checklistSections && item.checklistSections.length > 0 && (
-                          <div className="mt-4 rounded-lg border border-amber-500/25 bg-slate-950/50 p-3">
-                            <div className="mb-3">
-                              <div className="flex items-center justify-between gap-3 mb-2">
-                                <p className="text-xs text-amber-300 tracking-wide uppercase">
-                                  Metrics Checklist
-                                </p>
-                                <span className="text-[11px] text-amber-200">
-                                  {checkedChecklistCount}/{totalChecklistCount} done
-                                </span>
-                              </div>
-                              <div className="h-1.5 rounded-full bg-amber-950/70 border border-amber-500/20 overflow-hidden">
-                                <div
-                                  className="h-full bg-gradient-to-r from-amber-500/70 to-amber-300/80 transition-all duration-300"
-                                  style={{ width: `${checklistProgress}%` }}
-                                />
-                              </div>
-                            </div>
-                            <div className="space-y-3">
-                              {item.checklistSections.map((section, sectionIndex) => (
-                                <div key={sectionIndex} className="rounded-md border border-amber-500/25 bg-gradient-to-br from-amber-950/20 to-slate-900/60 p-3">
-                                  <p className="text-sm text-amber-200 font-semibold mb-2">{section.title}</p>
-                                  <ul className="space-y-1.5">
-                                    {section.items.map((checkItem, checkIndex) => {
-                                      const checkKey = `${templateKey}-section-${sectionIndex}-item-${checkIndex}`;
-                                      const checked = !!checkedChecklistItems[checkKey];
-                                      return (
-                                        <li key={checkIndex} className="text-sm leading-relaxed">
-                                          <label
-                                            className={`group flex items-start gap-3 rounded-md border px-3 py-2 cursor-pointer transition-all duration-150
-                                              ${checked
-                                                ? "border-amber-500/45 bg-amber-900/25"
-                                                : "border-amber-500/15 bg-slate-900/35 hover:border-amber-500/30 hover:bg-slate-900/60"
-                                              }`}
-                                          >
-                                            <input
-                                              type="checkbox"
-                                              checked={checked}
-                                              onChange={() => toggleChecklistItem(checkKey)}
-                                              className="sr-only"
-                                            />
-                                            <span
-                                              className={`mt-0.5 h-5 w-5 flex items-center justify-center rounded border text-[11px] font-bold transition-colors
-                                                ${checked
-                                                  ? "border-amber-300/80 bg-amber-400/20 text-amber-200"
-                                                  : "border-amber-500/35 bg-slate-900 text-transparent group-hover:border-amber-400/60"
-                                                }`}
-                                            >
-                                              ✓
-                                            </span>
-                                            <span className={checked ? "text-slate-400 line-through" : "text-slate-200"}>
-                                              {checkItem}
-                                            </span>
-                                          </label>
-                                        </li>
-                                      );
-                                    })}
-                                  </ul>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
+                          <SectionedChecklistCard
+                            className="mt-4"
+                            title="Metrics Checklist"
+                            sections={item.checklistSections}
+                            checklistKeyPrefix={templateKey}
+                            checkedItems={checkedChecklistItems}
+                            onToggle={toggleChecklistItem}
+                            theme={CHECKLIST_THEMES.amber}
+                          />
                         )}
 
                         {item.promptTemplate && (
