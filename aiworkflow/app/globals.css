@@ -24,3 +24,49 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.ui-scrollbar {
+  --scrollbar-track: rgba(15, 23, 42, 0.35);
+  --scrollbar-thumb: rgba(100, 116, 139, 0.55);
+  --scrollbar-thumb-hover: rgba(148, 163, 184, 0.7);
+  --scrollbar-border: rgba(15, 23, 42, 0.6);
+  scrollbar-gutter: stable;
+  scrollbar-width: thin !important;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track) !important;
+  forced-color-adjust: none;
+}
+
+.ui-scrollbar::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+.ui-scrollbar::-webkit-scrollbar-track {
+  background: var(--scrollbar-track) !important;
+  border-radius: 9999px;
+}
+
+.ui-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb) !important;
+  border-radius: 9999px;
+  border: 2px solid var(--scrollbar-border) !important;
+  background-clip: padding-box;
+}
+
+.ui-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover) !important;
+}
+
+.ui-scrollbar-emerald {
+  --scrollbar-track: rgba(6, 78, 59, 0.45);
+  --scrollbar-thumb: rgba(52, 211, 153, 0.72);
+  --scrollbar-thumb-hover: rgba(110, 231, 183, 0.9);
+  --scrollbar-border: rgba(4, 47, 46, 0.82);
+}
+
+.ui-scrollbar-amber {
+  --scrollbar-track: rgba(120, 53, 15, 0.45);
+  --scrollbar-thumb: rgba(251, 191, 36, 0.74);
+  --scrollbar-thumb-hover: rgba(252, 211, 77, 0.92);
+  --scrollbar-border: rgba(69, 26, 3, 0.82);
+}

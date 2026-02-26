@@ -16,8 +16,36 @@ export interface Step2Content {
   blocks: InfoBlock[];
 }
 
+export interface ChecklistSection {
+  title: string;
+  items: string[];
+}
+
+export interface ResourceLink {
+  label: string;
+  url: string;
+}
+
+export interface ProcedureStep {
+  title: string;
+  items: string[];
+}
+
 export interface ActionItem {
   step: string;
   title: string;
   description: string;
+  details?: string[];
+  warningNote?: string;
+  warningBody?: string[];
+  warningRisks?: string[];
+  procedureSteps?: ProcedureStep[];
+  pros?: string[];
+  cons?: string[];
+  bestFor?: string[];
+  guidingQuestions?: string[];
+  promptTemplate?: string;
+  checklistSections?: ChecklistSection[];
+  resources?: ResourceLink[];
+  moreSourcesUrl?: string;
 }
