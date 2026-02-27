@@ -180,7 +180,7 @@ export default function AIStrategySelector() {
             AI Strategy Selector
           </h1>
           <p className="text-slate-400 text-sm">
-            A 4-step framework for identifying your ideal LLM architecture.
+            With the AI race, every company decides to adopt AI into their workflow to accelerate productivity. Take this short 4-step quiz to determine which AI strategy would work most for your corp!
           </p>
         </div>
 
@@ -244,6 +244,16 @@ export default function AIStrategySelector() {
                 <div key={question.id} className="border border-slate-800 rounded-xl bg-slate-900 overflow-hidden">
                   <div className="px-5 py-4 border-b border-slate-800">
                     <p className="text-sm font-semibold text-slate-200">{question.legend}</p>
+                  </div>
+                  <div className="px-5 py-4 border-b border-slate-800">
+                    <p className="text-xs font-semibold text-slate-200/70">{question.description}</p>
+                  {question.image && (
+                    <img
+                      src={question.image.content}
+                      alt="Question visual"
+                      className="mt-3 max-h-64 rounded-lg"
+                    />
+                  )}
                   </div>
                   <div className="p-3 space-y-1">
                     {question.options.map((option, idx) => {

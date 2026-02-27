@@ -1,6 +1,8 @@
 export interface Question {
   id: number;
   legend: string;
+  description?: string;
+  image?: { type: 'image'; content: string };
   options: { label: string; value: string }[];
 }
 

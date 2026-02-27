@@ -26,6 +26,7 @@ export const QUESTIONS: Question[] = [
   {
     id: 1,
     legend: "1. What is your primary coding workflow?",
+    description: "How many people are there in the Engineer/SWE team?",
     options: [
       { label: "A. Solo developer / student", value: "2,4,5" },
       { label: "B. Small team (2–10 engineers)", value: "2,3,5" },
@@ -36,6 +37,7 @@ export const QUESTIONS: Question[] = [
   {
     id: 2,
     legend: "2. What is your main AI coding use case?",
+    description: "There can be many use cases for AI. Strategically narrow down your org's main purpose so we can recommend the best tool.",
     options: [
       { label: "A. Autocomplete & small snippets", value: "5" },
       { label: "B. Large feature generation", value: "4,5" },
@@ -48,6 +50,7 @@ export const QUESTIONS: Question[] = [
   {
     id: 3,
     legend: "3. How important is multi-file / repo-wide context?",
+    description: "If you store different products within different repositiories, and some product may call on other products' APIs. then this is important!",
     options: [
       { label: "A. Not important", value: "4,5" },
       { label: "B. Somewhat important", value: "2,3" },
@@ -57,6 +60,7 @@ export const QUESTIONS: Question[] = [
   {
     id: 4,
     legend: "4. Do you need strong reasoning for complex algorithms?",
+    description: "Examples for complex algorithms include quantitative analysis, healthcare diagnostics, or risk modeling—rather than for simple rule-based logic.",
     options: [
       { label: "A. Yes", value: "2,3" },
       { label: "B. Sometimes", value: "2,4" },
@@ -66,6 +70,8 @@ export const QUESTIONS: Question[] = [
   {
     id: 5,
     legend: "5. Do you require strict data privacy (no code sent externally)?",
+    description: "If you are under a governmental org or prefer no data to be leaked, you should select Yes. If your company's motto is for the public, then you can select No Restriction.",
+    image: { type: "image", content: "/privacy.jpg" },
     options: [
       { label: "A. Yes (Strict Local/Self-hosted)", value: "1" },
       { label: "B. Prefer enterprise API (Zero retention)", value: "1,2" },
@@ -75,6 +81,8 @@ export const QUESTIONS: Question[] = [
   {
     id: 6,
     legend: "6. Do you have DevOps capability to host models?",
+    description: "Your DevOps team can securely deploy, scale, monitor, and maintain AI models in production rather than relying solely on third-party hosted solutions.",
+    image: { type: "image", content: "/cicd.png" },
     options: [
       { label: "A. No", value: "4,5" },
       { label: "B. Limited", value: "2,3" },
@@ -84,6 +92,7 @@ export const QUESTIONS: Question[] = [
   {
     id: 7,
     legend: "7. Are you using:",
+    description: "What is the main coding platform that your team uses?",
     options: [
       { label: "A. VSCode", value: "3,5" },
       { label: "B. JetBrains", value: "3,4" },
@@ -113,14 +122,16 @@ export const QUESTIONS: Question[] = [
     id: 10,
     legend: "10. Expected monthly token usage?",
     options: [
-      { label: "A. Low", value: "5" },
-      { label: "B. Medium", value: "2,3" },
-      { label: "C. High", value: "1,4" },
+      { label: "A. Low (light internal use or prototypes)", value: "5" },
+      { label: "B. Medium (department-level workflows or customer-facing features)", value: "2,3" },
+      { label: "C. High (production-scale automation, large user bases, or continuous model processing)", value: "1,4" },
     ],
   },
   {
     id: 11,
     legend: "11. Willing to pay for premium reasoning?",
+    description: "Determine whether you are willing to pay higher per-token costs for advanced reasoning capabilities that improve accuracy and performance on complex, high-stakes tasks.",
+    image: { type: "image", content: "/aireasoning.webp" },
     options: [
       { label: "A. Yes", value: "2,3" },
       { label: "B. Mixed", value: "4" },
