@@ -13,20 +13,22 @@ export const STEP2_CONTENT: Record<number, Step2Content> = {
       {
         icon: "✅",
         title: "Pros:",
-        body: "Maximum control over privacy and customization but requires technical talent and infrastructure investment.",
+        body:  "Maximum control over data privacy, customization, and internal workflows. Long-term cost benefits at scale if your team has infrastructure expertise.",
       },
       {
         icon: "⚠️",
         title: "Cons:",
-        body: "Upfront investment is high but long-term ownership is favorable at scale.",
+        body: "Requires significant upfront investment in hardware and engineering talent. Ongoing maintenance and model updates are your responsibility.",
       },
       {
         icon: "📋",
         title: "Steps:",
         body: [
-          "Organizations with strict data sovereignty requirements",
-          "Regulated industries (finance, healthcare, defense)",
-          "Teams with ML infrastructure experience",
+          "Identify projects with strict data sovereignty or compliance requirements",
+          "Set up internal ML infrastructure (GPUs, storage, networking)",
+          "Deploy the open-weight model and connect it to internal data sources via RAG",
+          "Establish monitoring, logging, and update procedures",
+          "Train your team on operational best practices for model governance",
         ],
       },
     ],
@@ -41,21 +43,24 @@ export const STEP2_CONTENT: Record<number, Step2Content> = {
       {
         icon: "✅",
         title: "Pros:",
-        body: "Fast deployment and access to state-of-the-art performance without managing infrastructure.",
+        body:
+          "Fast deployment, state-of-the-art performance, large context support, and minimal technical overhead for internal teams.",
       },
       {
         icon: "⚠️",
         title: "Cons:",
-        body: "Token limits, latency, and usage costs.",
+        body:
+          "Subject to token limits, latency considerations, and recurring usage costs. Governance and security depend on the provider’s policies.",
       },
       {
         icon: "📋",
         title: "Steps:",
         body: [
-          "Negotiate enterprise licensing",
-          "Define governance policies",
-          "Integrate the API into internal tools (e.g., IDEs, documentation systems)",
-          "Establish secure data handling policies",
+          "Negotiate enterprise licensing and SLAs",
+          "Define internal governance and data handling policies",
+          "Integrate APIs with internal tools, IDEs, and documentation systems",
+          "Train staff on best practices for prompt design and result verification",
+          "Monitor usage, costs, and performance metrics regularly",
         ],
       },
     ],
@@ -68,17 +73,24 @@ export const STEP2_CONTENT: Record<number, Step2Content> = {
       "This option involves using AI systems designed to take multi-step actions (e.g., reading code, running tests, updating tickets).",
     blocks: [
       {
+        icon: "✅",
+        title: "Pros:",
+        body: "Enables autonomous workflows for complex or repetitive tasks, reducing manual effort and accelerating development pipelines.",
+      },
+      {
         icon: "⚠️",
         title: "Cons:",
-        body: "Unlike simple chat models, these systems act autonomously within boundaries, so governance and monitoring are critical. Human verification and oversight are also required.",
+        body:
+          "Requires careful monitoring and governance to prevent unintended actions. Human verification is essential for critical workflows.",
       },
       {
         icon: "📋",
         title: "Steps:",
         body: [
-          "Define permitted tool access (e.g., GitHub, CI logs, internal docs)",
-          "Implement guardrails",
-          "Monitor logs for safety and compliance",
+          "Define permitted tools and system access (e.g., GitHub, CI logs, internal documentation)",
+          "Set up guardrails, permission boundaries, and safety checks",
+          "Implement monitoring, logging, and alerting for autonomous actions",
+          "Train staff on interpreting agent outputs and approving critical actions",
         ],
       },
     ],
@@ -93,20 +105,23 @@ export const STEP2_CONTENT: Record<number, Step2Content> = {
       {
         icon: "✅",
         title: "Pros:",
-        body: "Balances cost efficiency with performance. Suitable for startups and mid-size enterprises instead of defaulting to premium models.",
+        body:
+          "Provides cost efficiency without sacrificing quality for critical queries. Ideal for startups or mid-size enterprises seeking scalable AI adoption.",
       },
       {
         icon: "⚠️",
         title: "Cons:",
-        body: "Needs careful usage tracking and workload management.",
+        body:
+          "Requires active monitoring of usage patterns, query routing, and budget management to ensure cost-effectiveness.",
       },
       {
         icon: "📋",
         title: "Steps:",
         body: [
-          "Define routing logic (e.g., based on query length or complexity)",
-          "Integrate both APIs",
-          "Track usage costs to ensure savings",
+          "Define routing logic based on query complexity or priority",
+          "Integrate both small and premium model APIs",
+          "Implement monitoring for performance and cost tracking",
+          "Adjust routing thresholds to optimize cost vs. accuracy",
         ],
       },
     ],
@@ -121,16 +136,24 @@ export const STEP2_CONTENT: Record<number, Step2Content> = {
       {
         icon: "✅",
         title: "Pros:",
-        body: "Fastest because no deployment is needed.",
+        body:
+          "Instant access in the IDE, minimal setup required, and fastest adoption since no separate deployment or infrastructure is needed.",
+      },
+      {
+        icon: "⚠️",
+        title: "Cons:",
+        body:
+          "Limited control over model behavior, privacy depends on the provider, and may not support complex multi-step reasoning tasks.",
       },
       {
         icon: "📋",
         title: "Steps:",
         body: [
-          "Enterprise licensing",
-          "Configuring access controls",
-          "Establishing coding guidelines for AI use",
-          "Training employees on prompt and review skills",
+          "Obtain enterprise licensing or subscriptions for the chosen IDE AI plugin",
+          "Configure access controls and authentication",
+          "Establish coding guidelines for AI-assisted development",
+          "Train developers on prompt strategies and result validation",
+          "Monitor usage, integration issues, and productivity impact",
         ],
       },
     ],

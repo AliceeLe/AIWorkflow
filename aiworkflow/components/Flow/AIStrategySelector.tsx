@@ -314,7 +314,6 @@ export default function AIStrategySelector() {
             </div>
 
             <div className="mb-6">
-              <h2 className="text-2xl font-bold text-white mb-2">{step2Data.headline}</h2>
               <p className="text-slate-400 text-sm leading-relaxed">{step2Data.summary}</p>
             </div>
 
