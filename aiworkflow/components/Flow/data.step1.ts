@@ -70,7 +70,7 @@ export const QUESTIONS: Question[] = [
   {
     id: 5,
     legend: "5. Do you require strict data privacy (no code sent externally)?",
-    description: "Select the level of data privacy your organization requires to determine if self-hosted or enterprise AI solutions are needed.",
+    description: "Select the level of data privacy your organization requires to determine if self-hosted or enterprise AI solutions are needed.\n\nImage source: https://www.istockphoto.com/photo/cybersecurity-concept-global-network-security-technology-business-people-protect-gm1435605327-476889094",
     image: { type: "image", content: "/privacy.jpg" },
     options: [
       { label: "A. Yes (Strict Local/Self-hosted)", value: "1" },
@@ -81,7 +81,7 @@ export const QUESTIONS: Question[] = [
   {
     id: 6,
     legend: "6. Do you have DevOps capability to host models?",
-    description: "Your DevOps team’s ability to deploy, monitor, and scale AI models determines whether you can run models in-house or need cloud-managed solutions.",
+    description: "Your DevOps team’s ability to deploy, monitor, and scale AI models determines whether you can run models in-house or need cloud-managed solutions.\n\nImage source: https://www.influxdata.com/blog/gitops-vs-devops-whats-the-difference/",
     image: { type: "image", content: "/cicd.png" },
     options: [
       { label: "A. No", value: "4,5" },
@@ -133,7 +133,7 @@ export const QUESTIONS: Question[] = [
   {
     id: 11,
     legend: "11. Willing to pay for premium reasoning?",
-    description: "Choose whether you are ready to invest in advanced AI reasoning that improves accuracy and performance for complex, high-stakes tasks.",
+    description: "Choose whether you are ready to invest in advanced AI reasoning that improves accuracy and performance for complex, high-stakes tasks. \n\nImage source: https://www.forbes.com/sites/bernardmarr/2024/10/10/ai-can-now-reason-what-it-means-for-business-and-beyond/",
     image: { type: "image", content: "/aireasoning.webp" },
     options: [
       { label: "A. Yes", value: "2,3" },
